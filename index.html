@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172554"><link rel="manifest" href="manifest.json">
+<title>WORKFLOW – Gestione fascicoli</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div><div class="brand">WORK<span>FLOW</span></div><div class="subtitle">Gestione fascicoli e attività d'ufficio</div></div><button id="installBtn" class="ghost hidden">Installa</button></header>
+<div class="layout">
+<nav class="nav" aria-label="Navigazione">
+<button class="navbtn active" data-view="home">⌂ <span>Home</span></button>
+<button class="navbtn" data-view="cases">▤ <span>Fascicoli</span></button>
+<button class="navbtn" data-view="calendar">▦ <span>Calendario</span></button>
+<button class="navbtn" data-view="deadlines">◷ <span>Scadenze</span></button>
+<button class="navbtn" data-view="minutes">⚖ <span>Verbalizzazioni</span></button>
+<button class="navbtn" data-view="stats">▥ <span>Statistiche</span></button>
+<button class="navbtn" data-view="settings">⚙ <span>Impostazioni</span></button>
+</nav>
+<main id="main">
+<section id="home" class="view active">
+<div class="pagehead"><div><p class="eyebrow">PANORAMICA</p><h1>La tua attività</h1><p class="muted">Tieni sotto controllo fascicoli, adempimenti e turni.</p></div><button class="primary" data-action="new-case">＋ Nuovo fascicolo</button></div>
+<div id="summaryCards" class="cards"></div>
+<div class="grid2"><article class="panel"><div class="panelhead"><h2>Scadenze più vicine</h2><button class="textbtn" data-goto="deadlines">Vedi tutte</button></div><div id="homeDeadlines" class="rows"></div></article>
+<article class="panel"><div class="panelhead"><h2>Prossimo turno di verbalizzazione</h2><button class="textbtn" data-goto="minutes">Apri sezione</button></div><div id="nextTurn" class="nextturn"></div></article></div>
+<article class="panel"><div class="panelhead"><h2>Fascicoli recenti</h2><button class="textbtn" data-goto="cases">Registro completo</button></div><div id="recentCases" class="rows"></div></article>
+</section>
+<section id="cases" class="view"><div class="pagehead"><div><p class="eyebrow">REGISTRO</p><h1>Fascicoli</h1><p class="muted">Registra e aggiorna i procedimenti assegnati.</p></div><button class="primary" data-action="new-case">＋ Nuovo fascicolo</button></div>
+<div class="toolbar"><input id="caseSearch" placeholder="Cerca per N.R.G. o consigliere…"><select id="caseFilter"><option value="all">Tutti i fascicoli</option><option value="open">In lavorazione</option><option value="done">Completati</option><option value="late">Con scadenze superate</option></select></div><div id="caseList" class="casegrid"></div></section>
+<section id="calendar" class="view"><div class="pagehead"><div><p class="eyebrow">AGENDA</p><h1>Calendario</h1><p class="muted">Udienze e scadenze registrate nei fascicoli.</p></div></div><div class="panel"><div class="toolbar"><input type="month" id="calendarMonth"></div><div id="calendarEvents" class="rows"></div></div></section>
+<section id="deadlines" class="view"><div class="pagehead"><div><p class="eyebrow">PROMEMORIA</p><h1>Scadenze</h1><p class="muted">Adempimenti ordinati per data. Le attività completate sono escluse dagli avvisi.</p></div><button id="notifyBtn" class="secondary">Attiva notifiche</button></div><div id="deadlineList" class="rows panel"></div></section>
+<section id="minutes" class="view"><div class="pagehead"><div><p class="eyebrow">TURNI D'AULA</p><h1>Verbalizzazioni</h1><p class="muted">Storico delle udienze verbalizzate e promemoria del prossimo turno.</p></div><button class="primary" data-action="new-minute">＋ Nuova verbalizzazione</button></div>
+<div id="minutesSummary" class="cards"></div><div class="panel"><div class="panelhead"><h2>Prossimo turno</h2><button class="secondary" data-action="set-turn">Imposta / modifica</button></div><div id="turnDetail" class="nextturn"></div></div><div class="panel"><h2>Storico verbalizzazioni</h2><div id="minuteList" class="rows"></div></div></section>
+<section id="stats" class="view"><div class="pagehead"><div><p class="eyebrow">MONITORAGGIO</p><h1>Statistiche</h1><p class="muted">Indicatori calcolati dai dati che registri in WORKFLOW.</p></div><select id="statsPeriod"><option value="all">Tutto il periodo</option><option value="year">Anno corrente</option><option value="month">Mese corrente</option></select></div><div id="statsCards" class="cards"></div><div class="grid2"><article class="panel"><h2>Adempimenti</h2><div id="completionBars"></div></article><article class="panel"><h2>Fascicoli per consigliere</h2><div id="byJudge" class="rows"></div></article></div><div class="panel"><h2>Andamento mensile</h2><div id="monthlyStats" class="rows"></div></div></section>
+<section id="settings" class="view"><div class="pagehead"><div><p class="eyebrow">PREFERENZE E DATI</p><h1>Impostazioni</h1><p class="muted">I dati restano salvati in questo browser/dispositivo.</p></div></div>
+<div class="panel settings"><h2>Backup e ripristino</h2><p class="muted">Esporta una copia dei tuoi fascicoli e delle verbalizzazioni. Conserva il file in un luogo sicuro.</p><button class="primary" id="exportBtn">Esporta backup JSON</button><label class="secondary filebtn">Importa backup JSON<input type="file" id="importFile" accept="application/json"></label><button class="secondary" id="csvBtn">Esporta fascicoli CSV</button></div>
+<div class="panel settings"><h2>Promemoria</h2><p>Le scadenze vengono evidenziate nell'app. Le notifiche del browser richiedono il consenso e, a seconda del dispositivo, potrebbero funzionare solo quando il browser o la PWA può eseguire attività in background.</p><label class="checkline"><input type="checkbox" id="reminder7" checked> Avvisa 7 giorni prima</label><label class="checkline"><input type="checkbox" id="reminder3" checked> Avvisa 3 giorni prima</label><label class="checkline"><input type="checkbox" id="reminder1" checked> Avvisa 1 giorno prima</label><label class="checkline"><input type="checkbox" id="reminder0" checked> Avvisa il giorno della scadenza</label><button class="secondary" id="saveSettings">Salva preferenze</button></div>
+<div class="panel settings"><h2>Privacy</h2><p class="muted">Questa prima versione archivia i dati localmente tramite il browser. Non inserire dati personali o informazioni riservate non strettamente necessarie. Proteggi il dispositivo con codice di accesso e backup sicuri.</p><button class="danger" id="clearBtn">Cancella tutti i dati locali</button></div></section>
+</main></div>
+<dialog id="caseDialog"><form id="caseForm" method="dialog"><div class="modalhead"><h2 id="caseDialogTitle">Nuovo fascicolo</h2><button type="button" class="x" data-close>×</button></div><input type="hidden" id="caseId"><div class="formgrid">
+<label>N.R.G. *<input id="nrg" required placeholder="Es. 1234/2026"></label><label>Consigliere relatore<input id="judge" placeholder="Nome e cognome"></label>
+<label>Data assegnazione<input id="assigned" type="date"></label><label>Data udienza discussione orale<input id="hearing" type="date"></label>
+<label>Scadenza note difensive conclusionali<input id="notesDue" type="date"></label><label>Scadenza deposito sentenza<input id="judgmentDue" type="date"></label>
+<label class="full">Annotazioni<textarea id="notes" rows="2" placeholder="Annotazioni facoltative"></textarea></label></div>
+<div class="checklist"><h3>Adempimenti</h3><label><input type="checkbox" id="hearingDone"> Udienza svolta</label><label><input type="checkbox" id="notesDone"> Note difensive conclusionali depositate</label><label><input type="checkbox" id="sheetDone"> Scheda di sentenza redatta</label><label><input type="checkbox" id="draftDone"> Bozza della sentenza consegnata</label><label><input type="checkbox" id="judgmentDone"> Sentenza depositata</label></div>
+<div class="modalactions"><button type="button" class="danger" id="deleteCase">Elimina</button><button class="primary" type="submit">Salva fascicolo</button></div></form></dialog>
+<dialog id="minuteDialog"><form id="minuteForm" method="dialog"><div class="modalhead"><h2 id="minuteDialogTitle">Nuova verbalizzazione</h2><button type="button" class="x" data-close>×</button></div><input type="hidden" id="minuteId"><div class="formgrid"><label>Data udienza *<input type="date" id="minuteDate" required></label><label>Magistrato<input id="minuteJudge"></label><label>Sezione<input id="minuteSection"></label><label>Tipologia<select id="minuteType"><option>Udienze civili</option><option>Altro</option></select></label><label class="full">Note<textarea id="minuteNotes" rows="2"></textarea></label></div><div class="modalactions"><button type="button" class="danger" id="deleteMinute">Elimina</button><button class="primary" type="submit">Salva</button></div></form></dialog>
+<dialog id="turnDialog"><form id="turnForm" method="dialog"><div class="modalhead"><h2>Prossimo turno</h2><button type="button" class="x" data-close>×</button></div><div class="formgrid"><label>Data del prossimo turno *<input type="date" id="turnDate" required></label><label>Magistrato<input id="turnJudge"></label><label class="full">Note<textarea id="turnNotes" rows="2"></textarea></label></div><div class="modalactions"><button class="primary" type="submit">Salva turno</button></div></form></dialog>
+<div id="toast" role="status"></div><script src="app.js"></script>
+</body></html>
